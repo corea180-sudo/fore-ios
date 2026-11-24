@@ -34,8 +34,7 @@ function patchIos(d, a) {
   let p = fs.readFileSync(pbx, 'utf8');
   if (!p.includes('CODE_SIGN_ENTITLEMENTS')) p = p.replace(/CODE_SIGN_STYLE = Automatic;/g, 'CODE_SIGN_ENTITLEMENTS = App/App.entitlements;\n\t\t\t\tCODE_SIGN_STYLE = Automatic;\n\t\t\t\tDEVELOPMENT_TEAM = 8G66DP2U52;');
   p = p.replace(/MARKETING_VERSION = [^;]+;/g, 'MARKETING_VERSION = 1.0.0;');
-  /* 스토어 올리기용 서명 — 개발 서명(iPhone Developer)은 시험 기기가 등록돼 있어야 해서 기기 없는 우리는 막힌다(2026-11-25 첫 빌드 실측) */
-  p = p.replace(/CODE_SIGN_IDENTITY = "iPhone Developer";/g, 'CODE_SIGN_IDENTITY = "Apple Distribution";');
+
   fs.writeFileSync(pbx, p);
   fs.writeFileSync(path.join(app, 'App/App.entitlements'), `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
