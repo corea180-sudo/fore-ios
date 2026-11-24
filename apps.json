@@ -1,0 +1,6 @@
+[
+ {"key":"golf","appId":"kr.ai.techlab.foregolf","name":"포어골프","url":"https://fore-golf-techlab.web.app/Fore.html","host":"fore-golf-techlab.web.app","icon":"https://fore-golf-techlab.web.app/icon-512.png","bg":"#0E1117","style":"DARK"},
+ {"key":"owner","appId":"kr.ai.techlab.foreowner","name":"FORE 점주","url":"https://fore-platform.web.app/owner.html","host":"fore-platform.web.app","icon":"https://fore-platform.web.app/icon-owner-512.png","bg":"#0E1117","style":"DARK"},
+ {"key":"museum","appId":"kr.ai.techlab.foremuseum","name":"스페이스 나무","url":"https://fore-museum-app.web.app/Museum.html","host":"fore-museum-app.web.app","icon":"https://fore-museum-app.web.app/icon-512.png","bg":"#221F1A","style":"DARK"},
+ {"key":"saydo","appId":"kr.ai.techlab.saydo","name":"세이두","url":"https://saydo-ai.web.app/","host":"saydo-ai.web.app","icon":"https://saydo-ai.web.app/apple-touch-icon.png","bg":"#F4F6FB","style":"LIGHT"}
+]
