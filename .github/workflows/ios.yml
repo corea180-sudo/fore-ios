@@ -17,10 +17,15 @@ jobs:
           if [ "${{ inputs.app }}" = all ]; then echo 'apps=["golf","owner","museum","saydo"]' >> "$GITHUB_OUTPUT"; else echo "apps=[\"${{ inputs.app }}\"]" >> "$GITHUB_OUTPUT"; fi
   build:
     needs: plan
-    runs-on: macos-15
+    runs-on: macos-26
     strategy: { fail-fast: false, max-parallel: 1, matrix: { app: '${{ fromJson(needs.plan.outputs.apps) }}' } }
     steps:
       - uses: actions/checkout@v4
+      # 애플은 iOS 26 SDK(Xcode 26) 이상으로 만든 앱만 받는다(2026-11-25 업로드 검증 실측) — 러너의 가장 새 정식 Xcode 26 을 고른다
+      - name: Xcode 26 고르기
+        run: |
+          X=$(ls -d /Applications/Xcode_26*.app | grep -vi beta | sort -V | tail -1); [ -n "$X" ] || X=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+          sudo xcode-select -s "$X/Contents/Developer"; xcodebuild -version
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm ci --no-audit --no-fund
