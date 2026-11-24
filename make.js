@@ -50,7 +50,7 @@ function patchIos(d, a) {
     if ((p.match(/GoogleService-Info\.plist/g) || []).length !== 6) throw new Error('GoogleService-Info.plist 를 프로젝트에 넣지 못했다 — config.xml 줄 모양이 바뀌었다');
   }
   fs.writeFileSync(pbx, p);
-  fs.copyFileSync(path.join(__dirname, 'res', 'gsi', a.key + '.plist'), path.join(app, 'App', 'GoogleService-Info.plist'));
+  fs.copyFileSync(path.join(__dirname, 'res', a.key + '-gsi.plist'), path.join(app, 'App', 'GoogleService-Info.plist'));
   fs.writeFileSync(path.join(app, 'App/App.entitlements'), `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict><key>aps-environment</key><string>production</string><key>com.apple.developer.applesignin</key><array><string>Default</string></array></dict></plist>
@@ -59,7 +59,7 @@ function patchIos(d, a) {
   const add = (k, v) => { if (!pl.includes(`<key>${k}</key>`)) pl = pl.replace(/<dict>\n/, `<dict>\n\t<key>${k}</key>\n\t${v}\n`); };
   add('ITSAppUsesNonExemptEncryption', '<false/>');
   add('UIBackgroundModes', '<array><string>remote-notification</string></array>');
-  const rev = (fs.readFileSync(path.join(__dirname, 'res', 'gsi', a.key + '.plist'), 'utf8').match(/<key>REVERSED_CLIENT_ID<\/key>\s*<string>([^<]+)<\/string>/) || [])[1];
+  const rev = (fs.readFileSync(path.join(__dirname, 'res', a.key + '-gsi.plist'), 'utf8').match(/<key>REVERSED_CLIENT_ID<\/key>\s*<string>([^<]+)<\/string>/) || [])[1];
   if (rev) add('CFBundleURLTypes', `<array><dict><key>CFBundleURLSchemes</key><array><string>${rev}</string></array></dict></array>`);
   pl = pl.replace(/(<key>CFBundleDisplayName<\/key>\s*<string>)[^<]*(<\/string>)/, `$1${a.name}$2`);
   fs.writeFileSync(ip, pl);
