@@ -1,0 +1,4 @@
+node_modules/
+apps/*/node_modules
+*.p8
+.DS_Store
